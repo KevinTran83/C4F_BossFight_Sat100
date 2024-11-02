@@ -3,6 +3,8 @@
 
 #include "MotionDetector.h"
 
+#include "GameFramework/Character.h"
+
 // Sets default values for this component's properties
 UMotionDetector::UMotionDetector()
 {
@@ -20,7 +22,8 @@ void UMotionDetector::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+	Character         = Cast<ACharacter>(GetOwner());
+	CharacterMovement = Character->GetCharacterMovement();
 }
 
 
@@ -32,3 +35,9 @@ void UMotionDetector::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	// ...
 }
 
+bool UMotionDetector::IsMoving()
+{
+	if (CharacterMovement == nullptr) return false;
+	return CharacterMovement->Velocity.Length() > MinWalkSpeed
+		&& CharacterMovement->GetCurrentAcceleration() != FVector::ZeroVector;
+}

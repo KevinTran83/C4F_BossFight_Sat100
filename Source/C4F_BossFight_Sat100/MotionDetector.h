@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+
+#include "GameFramework/CharacterMovementComponent.h"
+
 #include "MotionDetector.generated.h"
 
 
@@ -22,10 +25,12 @@ protected:
 	UPROPERTY ( EditAnywhere, BlueprintReadWrite, Category="BossFighter",
 		        meta=(AllowPrivateAccess="true")
 	          ) float MinWalkSpeed = 3.0f;
+	ACharacter *Character;
+	UCharacterMovementComponent *CharacterMovement;
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UFUNCTION(BlueprintCallable) bool IsMoving();
 };
