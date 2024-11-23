@@ -41,3 +41,12 @@ bool UMotionDetector::IsMoving()
 	return CharacterMovement->Velocity.Length() > MinWalkSpeed
 		&& CharacterMovement->GetCurrentAcceleration() != FVector::ZeroVector;
 }
+
+float UMotionDetector::GetYaw()
+{
+	if (Character == nullptr)         return 0.f;
+	if (CharacterMovement == nullptr) return 0.f;
+	FRotator r = Character->GetBaseAimRotation()
+		       - FRotationMatrix::MakeFromX(CharacterMovement->Velocity).Rotator();
+	return r.Yaw;
+}
